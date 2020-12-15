@@ -27,14 +27,3 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-
-### VS Code ###
-.vscode/
-/config-cache/ApolloNoAppIdPlaceHolder/config-cache/ApolloNoAppIdPlaceHolder+default+SAT.COMMON-V2.properties
-/config-cache/
-/ehm-admin/logs/ehm-admin/
-/ehm-admin/ehm-admin-web/config-cache/ApolloNoAppIdPlaceHolder/config-cache/
-/ehm-business/ehm-business-web/config-cache/
-
-/lib
-/ehm-diagnosis/ehm-diagnosis-web/config-cache/
