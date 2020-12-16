@@ -1,4 +1,4 @@
-package com.example.vo;
+package com.mercy.vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -55,7 +55,7 @@ public class CommonResultVo<T> implements Serializable {
     public static CommonResultVo success(){
         return SUCCESS_CACHE;
     }
-    //成功返回数据
+
     public static <T> CommonResultVo<T> success(T data){
         CommonResultVo commonResultVo = new CommonResultVo();
         commonResultVo.setCode(SUCCESS_CODE);

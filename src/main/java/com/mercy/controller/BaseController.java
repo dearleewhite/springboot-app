@@ -1,6 +1,6 @@
-package com.example.controller;
+package com.mercy.controller;
 
-import com.example.vo.CommonResultVo;
+import com.mercy.vo.CommonResultVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
