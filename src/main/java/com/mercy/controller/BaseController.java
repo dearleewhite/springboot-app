@@ -1,9 +1,14 @@
 package com.mercy.controller;
 
+import com.mercy.entity.Type;
+import com.mercy.service.TypeService;
 import com.mercy.vo.CommonResultVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Description:
@@ -14,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/base/")
 public class BaseController {
+
+    @Autowired
+    private TypeService typeService;
 
     @GetMapping("success")
     public CommonResultVo getMessage(){
@@ -34,6 +42,11 @@ public class BaseController {
     @GetMapping("messageError")
     public CommonResultVo getMessageError(){
         return CommonResultVo.error("error");
+    }
+
+    @GetMapping("listWithTree")
+    public CommonResultVo<List<Type>> listWithTree(){
+       return CommonResultVo.success(typeService.listWithTree());
     }
 
 
