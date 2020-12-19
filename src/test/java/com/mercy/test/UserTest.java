@@ -28,8 +28,8 @@ public class UserTest {
 
     @Test
     public void userTest(){
-        List<Type> types = typeService.listWithTree();
-        System.out.println(types);
+//        List<Type> types = typeService.listWithTree(Boolean.TRUE);
+//        System.out.println(types);
     }
 
 }

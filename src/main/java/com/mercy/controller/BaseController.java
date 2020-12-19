@@ -6,6 +6,7 @@ import com.mercy.vo.CommonResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,8 +46,10 @@ public class BaseController {
     }
 
     @GetMapping("listWithTree")
-    public CommonResultVo<List<Type>> listWithTree(){
-       return CommonResultVo.success(typeService.listWithTree());
+    public CommonResultVo<List<Type>> listWithTree(@RequestParam("loadChildren") Boolean loadChildren,
+                                                   @RequestParam("showLevel") Integer showLevel,
+                                                   @RequestParam("name") String name){
+       return CommonResultVo.success(typeService.listWithTree(loadChildren, showLevel, name));
     }
 
 
