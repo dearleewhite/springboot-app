@@ -9,6 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.env.Environment;
+
+import java.net.InetAddress;
 
 /**
  * @author: myapp
@@ -35,6 +38,7 @@ public class MyApp implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // 通过Naming服务注册实例到注册中心
-        namingService.registerInstance(applicationName, "192.168.111.138", serverPort);
+        InetAddress address = InetAddress.getLocalHost();
+        namingService.registerInstance(applicationName, address.toString(), serverPort);
     }
 }
