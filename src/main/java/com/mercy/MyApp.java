@@ -1,7 +1,11 @@
 package com.mercy;
 
+import com.alibaba.nacos.api.annotation.NacosInjected;
+import com.alibaba.nacos.api.naming.NamingService;
 import com.mercy.mapper.UserMapper;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,9 +21,20 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.mercy.*"})
 /**扫描mapper**/
 @MapperScan(basePackageClasses = {UserMapper.class})
-public class MyApp {
+public class MyApp implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(MyApp.class,args);
+    }
+    @NacosInjected
+    private NamingService namingService;
+    @Value("${spring.application.name}")
+    private String applicationName;
+    @Value("${server.port}")
+    private Integer serverPort;
+    @Override
+    public void run(String... args) throws Exception {
+        // 通过Naming服务注册实例到注册中心
+        namingService.registerInstance(applicationName, "192.168.111.138", serverPort);
     }
 }
