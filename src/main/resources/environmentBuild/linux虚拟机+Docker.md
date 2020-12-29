@@ -30,7 +30,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service 
 3,启动mysql镜像 
 
 ```sh
-docker run -p 3306:3306 --name hwl_mysql -e MYSQL_ROOT_PASSWORD=123456 -d 697
+docker run -p 3306:3306 --name hwl_mysql -e MYSQL_ROOT_PASSWORD=bob463491 -d 697
 ```
 
 建表语句

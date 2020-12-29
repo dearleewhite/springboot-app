@@ -7,7 +7,7 @@ spring:
 #    解决sql执行查询字符编码问题,可引发中文模糊查询相关问题
     url: jdbc:mysql://192.168.111.138:3306/app?serverTimeZone=UTC&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: bob463491
 
 # 路径名称,左侧/一定要加
 server:
