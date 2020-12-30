@@ -4,8 +4,10 @@ import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.CanalEntry;
 import com.alibaba.otter.canal.protocol.Message;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Service;
 
 import java.net.InetSocketAddress;
 import java.util.List;
@@ -17,20 +19,20 @@ import java.util.List;
  **/
 
 
-@Component
-public class CanalClient implements InitializingBean {
+@Service
+@Slf4j
+public class CanalClient implements ApplicationRunner {
 
     private final static int BATCH_SIZE = 1000;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
+    public void start(){
         // 创建链接
         CanalConnector connector = CanalConnectors.newSingleConnector
                 //canal运行IP,端口号,canal.properties中获取
-                (new InetSocketAddress("192.168.111.138", 11111),
+                (new InetSocketAddress("192.168.111.139", 11111),
                         "example",
-                        "admin",
-                        "4ACFE3202A5FF5CF467898FC58AAB1D615029441");
+                        "",
+                        "");
         try {
             //打开连接
             connector.connect();
@@ -87,13 +89,16 @@ public class CanalClient implements InitializingBean {
             //获取操作类型：insert/update/delete类型
             CanalEntry.EventType eventType = rowChage.getEventType();
             //打印Header信息
-            System.out.println(String.format("================》; binlog[%s:%s] , name[%s,%s] , eventType : %s",
+            String format = String.format("================》; binlog[%s:%s] , name[%s,%s] , eventType : %s",
                     entry.getHeader().getLogfileName(), entry.getHeader().getLogfileOffset(),
                     entry.getHeader().getSchemaName(), entry.getHeader().getTableName(),
-                    eventType));
+                    eventType);
+            System.out.println(format);
+            log.info(format);
             //判断是否是DDL语句
             if (rowChage.getIsDdl()) {
                 System.out.println("================》;isDdl: true,sql:" + rowChage.getSql());
+                log.info("================》;isDdl: true,sql:" + rowChage.getSql());
             }
             //获取RowChange对象里的每一行数据，打印出来
             for (CanalEntry.RowData rowData : rowChage.getRowDatasList()) {
@@ -107,9 +112,11 @@ public class CanalClient implements InitializingBean {
                 } else {
                     //变更前的数据
                     System.out.println("------->; before");
+                    log.info("------->; before");
                     printColumn(rowData.getBeforeColumnsList());
                     //变更后的数据
                     System.out.println("------->; after");
+                    log.info("------->; after");
                     printColumn(rowData.getAfterColumnsList());
                 }
             }
@@ -119,6 +126,12 @@ public class CanalClient implements InitializingBean {
     private static void printColumn(List<CanalEntry.Column> columns) {
         for (CanalEntry.Column column : columns) {
             System.out.println(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated());
+            log.info(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated());
         }
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        this.start();
     }
 }

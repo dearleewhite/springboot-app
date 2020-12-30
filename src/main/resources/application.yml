@@ -5,9 +5,11 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
 #    解决sql执行查询字符编码问题,可引发中文模糊查询相关问题
-    url: jdbc:mysql://192.168.111.138:3306/app?serverTimeZone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://192.168.111.139:3306/app?serverTimeZone=UTC&characterEncoding=UTF-8
     username: root
     password: bob463491
+  profiles:
+    active: dev
 
 # 路径名称,左侧/一定要加
 server:
@@ -16,7 +18,8 @@ server:
   port: 8080
 nacos:
   discovery:
-    server-addr: 192.168.111.138:8848
+    server-addr: 192.168.111.139:8848
+
 
 
 
