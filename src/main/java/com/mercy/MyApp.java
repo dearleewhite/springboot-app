@@ -24,21 +24,25 @@ import java.net.InetAddress;
 @ComponentScan(basePackages = {"com.mercy.*"})
 /**扫描mapper**/
 @MapperScan(basePackageClasses = {UserMapper.class})
-public class MyApp implements CommandLineRunner {
+public class MyApp implements CommandLineRunner{
 
-    public static void main(String[] args) {
-        SpringApplication.run(MyApp.class,args);
-    }
     @NacosInjected
     private NamingService namingService;
+
     @Value("${spring.application.name}")
     private String applicationName;
+
     @Value("${server.port}")
     private Integer serverPort;
+
     @Override
     public void run(String... args) throws Exception {
         // 通过Naming服务注册实例到注册中心
         InetAddress address = InetAddress.getLocalHost();
         namingService.registerInstance(applicationName, address.toString(), serverPort);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(MyApp.class,args);
     }
 }

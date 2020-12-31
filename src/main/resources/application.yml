@@ -1,7 +1,7 @@
 # 应用名称
 spring:
   application:
-    name: myapp
+    name: myapp111
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
 #    解决sql执行查询字符编码问题,可引发中文模糊查询相关问题
@@ -19,8 +19,9 @@ server:
 nacos:
   discovery:
     server-addr: 192.168.111.139:8848
-
-
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
 

@@ -100,9 +100,9 @@
             </plugin>
         </plugins>
     </build>
-    <properties>
+    <!--<properties>
         <skipTests>true</skipTests>
-    </properties>
+    </properties>-->
 
 
 

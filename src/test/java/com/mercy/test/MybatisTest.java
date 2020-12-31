@@ -2,9 +2,11 @@ package com.mercy.test;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.mercy.dao.PatrolTaskDao;
 import com.mercy.dao.UserDao;
+import com.mercy.entity.PatrolTask;
 import com.mercy.entity.User;
-import com.mercy.service.TypeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @Description:
@@ -26,18 +32,27 @@ public class MybatisTest {
 
     @Autowired
     private UserDao userDao;
-    @Autowired
-    private TypeService typeService;
+   @Autowired
+   private PatrolTaskDao patrolTaskDao;
 
     @Test
     public void userTest(){
         LambdaQueryWrapper<User> queryWrapper = new QueryWrapper<User>().lambda();
-        queryWrapper.and(w -> w.and(o -> o.in(User::getAge, Arrays.asList(1, 2)).and(wrapper -> wrapper.ge(User::getAge, 1)))
-                .or()
-                        .and(q -> q.in(User::getAge, Arrays.asList(1, 2)).ge(User::getAge, 1)
-
-                                )
-        );
+        queryWrapper.and(q1 -> q1.in(User::getAge, Arrays.asList(1, 2)).ge(User::getAge, 1))
+                .or(q2 -> q2.in(User::getAge, Arrays.asList(1, 2)).ge(User::getAge, 1) );
+        List<User> list = userDao.list(queryWrapper);
+        System.out.println(list);
+        Date endTime = new Date();
+        Date startTime = new Date();
+        List<Integer> states1 = Stream.of(2, 4).collect(Collectors.toList());
+        List<Integer> states2 = Stream.of(5, 7).collect(Collectors.toList());
+        //总数
+        LambdaQueryWrapper<PatrolTask> queryWrapper1 = Wrappers.<PatrolTask>lambdaQuery()
+                .eq( PatrolTask::getCompanyId, 1)
+                .and(w -> w.and(q1 -> q1.in(PatrolTask::getState, states1).between(PatrolTask::getPlanStartTime, startTime, endTime))
+                        .or(q2 -> q2.in(PatrolTask::getState, states2).between(PatrolTask::getActualStartTime, startTime, endTime)));
+        List<PatrolTask> list1 = patrolTaskDao.list(queryWrapper1);
+        System.out.println(list1);
 
 
     }
