@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,7 +38,7 @@ public class MybatisTest {
 
     @Test
     public void userTest() {
-        LambdaQueryWrapper<User> queryWrapper = new QueryWrapper<User>().lambda();
+       /* LambdaQueryWrapper<User> queryWrapper = new QueryWrapper<User>().lambda();
         queryWrapper.and(q1 -> q1.in(User::getAge, Arrays.asList(1, 2)).ge(User::getAge, 1))
                 .or(q2 -> q2.in(User::getAge, Arrays.asList(1, 2)).ge(User::getAge, 1));
         List<User> list = userDao.list(queryWrapper);
@@ -55,7 +53,7 @@ public class MybatisTest {
                 .and(w -> w.and(q1 -> q1.in(PatrolTask::getState, states1).between(PatrolTask::getPlanStartTime, startTime, endTime))
                         .or(q2 -> q2.in(PatrolTask::getState, states2).between(PatrolTask::getActualStartTime, startTime, endTime)));
         List<PatrolTask> list1 = patrolTaskDao.list(queryWrapper1);
-        System.out.println(list1);
+        System.out.println(list1);*/
 
 
     }
@@ -64,7 +62,21 @@ public class MybatisTest {
     @Test
     public void redisTest() {
 //        redisUtil.set("first","123");
-        String first_key = (String)redisUtil.get("first");
-        System.out.println(first_key);
+//        String first_key = (String)redisUtil.get("first");
+//        System.out.println(first_key);
     }
+
+    @Test
+    public void deduplication() {
+        /*User user1 = new User().setAge(23).setName("zhangsan");
+        User user2 = new User().setAge(23).setName("lisi");
+        User user3 = new User().setAge(24).setName("zhangsan");
+        User user4 = new User().setAge(23).setName("zhangsan");
+        List<User> users = Stream.of(user1, user2, user3, user4).collect(Collectors.toList());
+        TreeSet collect = users.stream().collect(
+                Collectors.toCollection(() -> new TreeSet(Comparator.comparing(User::getAge)))
+        );*/
+    }
+
+
 }
