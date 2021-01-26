@@ -3,10 +3,13 @@ package com.mercy.test;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.common.collect.Lists;
 import com.mercy.dao.PatrolTaskDao;
 import com.mercy.dao.UserDao;
 import com.mercy.entity.PatrolTask;
+import com.mercy.entity.Type;
 import com.mercy.entity.User;
+import com.mercy.utils.CollectionUtil;
 import com.mercy.utils.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +70,7 @@ public class MybatisTest {
     }
 
     @Test
-    public void deduplication() {
+    public void deduplication() throws Exception {
         /*User user1 = new User().setAge(23).setName("zhangsan");
         User user2 = new User().setAge(23).setName("lisi");
         User user3 = new User().setAge(24).setName("zhangsan");

@@ -41,7 +41,7 @@ public class User extends BaseEntity {
             list2.add(type);
         }
         try {
-            List<Type> objects = (List<Type>)CollectionUtil.receiveDefectListByClassAndFieldNames(list1, list2, Type.class, "name", "pid","亚索看好了");
+            List<Type> objects = CollectionUtil.receiveDefectListByClassAndFieldNames(list1, list2, Type.class, "name", "pid","亚索看好了");
             System.out.println(objects);
         }catch (Exception e){
             System.out.println(e.getMessage());

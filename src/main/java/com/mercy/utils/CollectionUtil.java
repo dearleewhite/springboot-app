@@ -42,7 +42,8 @@ public class CollectionUtil {
      * @return resultList 差集ArrayList
      * @方法描述：获取两个ArrayList的差集
      */
-    public static List<?> receiveDefectListByClassAndFieldNames(List<?> firstArrayList, List<?> secondArrayList, Class<?> clazz, String... fieldNames) throws Exception {
+    @SuppressWarnings("All")
+    public static <T> List<T> receiveDefectListByClassAndFieldNames(List<T> firstArrayList, List<T> secondArrayList, Class<T> clazz, String... fieldNames) throws Exception {
         if (CollectionUtils.isEmpty(firstArrayList)) {
             return Collections.emptyList();
         }
@@ -50,7 +51,7 @@ public class CollectionUtil {
             throw new Exception("集合的元素类与指定类的类型不一致!");
         }
         // 类型一致做转换
-        List<Object> objectList1 = translate(firstArrayList, clazz);
+        List<T> objectList1 = translate(firstArrayList, clazz);
         if (CollectionUtils.isEmpty(secondArrayList)) {
             return objectList1;
         }
@@ -58,7 +59,7 @@ public class CollectionUtil {
             throw new Exception("集合的元素类与指定类的类型不一致!");
         }
         // 类型一致做转换
-        List<Object> objectList2 = translate(secondArrayList, clazz);
+        List<T> objectList2 = translate(secondArrayList, clazz);
         List<String> fieldNamesFromPara = Arrays.stream(fieldNames).collect(Collectors.toList());
         if (fieldNamesFromPara.size() < 1) {
             throw new Exception();
@@ -78,14 +79,15 @@ public class CollectionUtil {
                 .collect(Collectors.toList());
     }
 
-    private static List<Object> translate(List<?> secondArrayList, Class<?> clazz) {
+    private static <T> List<T> translate(List<T> secondArrayList, Class<T> clazz) {
         return secondArrayList.stream().map(t -> {
-            Object obj = null;
+            T obj = null;
             try {
                 obj = clazz.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
             }
+            assert obj != null;
             BeanUtils.copyProperties(t, obj);
             return obj;
         }).collect(Collectors.toList());
