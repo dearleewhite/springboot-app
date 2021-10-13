@@ -1,11 +1,14 @@
 package com.mercy.entity;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mercy.utils.CollectionUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +28,22 @@ public class User extends BaseEntity {
 
 
     public static void main(String[] args) throws Exception {
+//        testListUtil();
+//        mapIsEmpty();
+        Type type = new Type();
+        type.setName("123");
+        System.out.println(type.getSort() + "/" + type.getName());
+
+    }
+
+    private static void mapIsEmpty() {
+        HashMap<Object, Object> map = Maps.newHashMap();
+        boolean empty = CollectionUtils.isEmpty(map.keySet());
+        System.out.println(empty);
+        System.out.println(map.isEmpty());
+    }
+
+    private static void testListUtil() {
         List<Type> list1 = Lists.newArrayList();
         for (int i = 0; i < 12; i++) {
             Type type = new Type();
@@ -46,7 +65,5 @@ public class User extends BaseEntity {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
     }
 }

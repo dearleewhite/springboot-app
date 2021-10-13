@@ -42,7 +42,7 @@ public class CollectionUtil {
      * @return resultList 差集ArrayList
      * @方法描述：获取两个ArrayList的差集
      */
-    @SuppressWarnings("All")
+
     public static <T> List<T> receiveDefectListByClassAndFieldNames(List<T> firstArrayList, List<T> secondArrayList, Class<T> clazz, String... fieldNames) throws Exception {
         if (CollectionUtils.isEmpty(firstArrayList)) {
             return Collections.emptyList();
