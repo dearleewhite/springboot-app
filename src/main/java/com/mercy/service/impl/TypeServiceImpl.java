@@ -1,10 +1,17 @@
 package com.mercy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mercy.dao.TypeDao;
 import com.mercy.entity.Type;
+import com.mercy.entity.tools.Pager;
+import com.mercy.mapper.TypeMapper;
 import com.mercy.service.TypeService;
 import com.mercy.utils.RedisUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +35,8 @@ public class TypeServiceImpl implements TypeService {
     private TypeDao typeDao;
     @Resource
     private RedisUtil redisUtil;
+    @Resource
+    private TypeMapper typeMapper;
 
 
     @Override
@@ -54,6 +63,34 @@ public class TypeServiceImpl implements TypeService {
 
         redisUtil.set("app:type:tree", level1);
         return level1;
+    }
+
+    @Override
+    public IPage<Type> listWithTreePage(Boolean loadChildren, Integer showLevel, String name, Pager pager) {
+        LambdaQueryWrapper<Type> queryWrapper = this.assemblyQueryCond(name);
+        return typeMapper.selectPage(new Page<>(pager.getPageIndex(), pager.getPageSize()), queryWrapper);
+    }
+
+    private LambdaQueryWrapper<Type> assemblyQueryCond(String name) {
+        LambdaQueryWrapper<Type> queryWrapper = new LambdaQueryWrapper<>();
+        if (null != name) {
+            queryWrapper = new QueryWrapper<Type>()
+                    .lambda()
+                    /*.eq(null != dto.getId(), DeviceStore::getId, dto.getId())
+                    .ne(null != dto.getNeId(), DeviceStore::getId, dto.getNeId())
+                    .in(!CollectionUtils.isEmpty(dto.getIds()), DeviceStore::getId, dto.getIds())
+                    .eq(null != dto.getCode() && !"".equals(dto.getCode()), DeviceStore::getCode, dto.getCode())
+                    .eq(null != dto.getModelId(), DeviceStore::getModelId, dto.getModelId())
+                    .in(CollectionUtils.isNotEmpty(dto.getModelIds()), DeviceStore::getModelId, dto.getModelIds())
+                    .eq(null != dto.getCompanyId(), DeviceStore::getCompanyId, dto.getCompanyId())
+                    .eq(null != dto.getMainFlag(), DeviceStore::getMainFlag, dto.getMainFlag())
+                    .and(StringUtils.isNotBlank(dto.getName()), wrapper -> wrapper
+                            .like(DeviceStore::getName, dto.getName())
+                            .or().like(DeviceStore::getSizeCode, dto.getName()))
+                    .orderByDesc(DeviceStore::getGmtCreate)*/;
+
+        }
+        return queryWrapper;
     }
 
 

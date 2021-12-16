@@ -1,6 +1,8 @@
 package com.mercy.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mercy.entity.Type;
+import com.mercy.entity.tools.Pager;
 
 import java.util.List;
 
@@ -17,4 +19,6 @@ public interface TypeService {
      * @return
      */
     List<Type> listWithTree(Boolean loadChildren, Integer showLevel,  String name);
+
+    IPage<Type> listWithTreePage(Boolean loadChildren, Integer showLevel, String name, Pager pager);
 }
