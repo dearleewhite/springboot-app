@@ -1,5 +1,6 @@
 package com.mercy.controller;
 
+import com.mercy.annotation.Access;
 import com.mercy.entity.Type;
 import com.mercy.service.TypeService;
 import com.mercy.vo.CommonResultVo;
@@ -24,7 +25,8 @@ public class BaseController {
     @Autowired
     private TypeService typeService;
 
-    @GetMapping("success")
+    @GetMapping("admin")
+    @Access(authorities = {"admin"})
     public CommonResultVo getMessage(){
         return CommonResultVo.success();
     }
