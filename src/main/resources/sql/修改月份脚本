@@ -1,0 +1,9 @@
+UPDATE fs_budg_exe_stt_e SET data_ym = DATE_FORMAT(date_sub(str_to_date(CONCAT(data_ym,'01'), '%Y%m%d'), INTERVAL -1 MONTH), '%Y%m') ORDER BY data_ym DESC
+
+DATE_FORMAT(str_to_date(CONCAT(data_ym, '01'), '%Y%m%d'), '%Y-%m')>
+            DATE_FORMAT(date_sub(curdate(), INTERVAL 7 MONTH), '%Y-%m');
+SELECT DATE_FORMAT(str_to_date(CONCAT('202111','01'), '%Y%m%d'), '%Y%m');
+SELECT DATE_FORMAT(date_sub(str_to_date(CONCAT('202111','01'), '%Y%m%d'), INTERVAL 1 MONTH), '%Y%m')
+SELECT str_to_date(CONCAT('202111','01'), '%Y%m%d')
+SELECT date_sub(str_to_date(CONCAT('202112','01'), '%Y%m%d'), INTERVAL -1 MONTH )
+SELECT curdate()
